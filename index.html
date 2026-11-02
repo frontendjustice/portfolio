@@ -13,30 +13,12 @@
   <script>document.documentElement.className = "js";</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Jost:wght@500&family=JetBrains+Mono:wght@500&family=Caveat:wght@600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Jost:wght@500&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<!-- Hand-drawn line filter (used by storyboard sketches: "line boil") -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <defs>
-    <filter id="sketch">
-      <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="1">
-        <animate class="boil" attributeName="seed" values="1;2;3;4" dur="0.5s" calcMode="discrete" repeatCount="indefinite"/>
-      </feTurbulence>
-      <feDisplacementMap in="SourceGraphic" scale="3"/>
-    </filter>
-    <linearGradient id="brandGrad" x1="0" y1="1" x2="1" y2="0">
-      <stop offset="0" stop-color="#6D4AFF"/><stop offset="1" stop-color="#22D3EE"/>
-    </linearGradient>
-    <linearGradient id="pinkGrad" x1="0" y1="1" x2="1" y2="0">
-      <stop offset="0" stop-color="#FF4F96"/><stop offset="1" stop-color="#FF9CC4"/>
-    </linearGradient>
-  </defs>
-</svg>
-
-<!-- Intro: the logo animates in -->
+<!-- Intro: the logo animates in (once per visit, click to skip) -->
 <div class="loader" id="loader" aria-hidden="true">
   <svg xmlns="http://www.w3.org/2000/svg" class="loader__logo" viewBox="55 100 380 270"><defs><linearGradient id="ldA" gradientUnits="userSpaceOnUse" x1="26" y1="-10" x2="465" y2="472"><stop offset="0" stop-color="#6D4AFF"/><stop offset="1" stop-color="#22D3EE"/></linearGradient></defs>
 <g class="lg lg-a"><path transform="translate(60.00 250.00) scale(0.22000 -0.22000)" d="M106 330Q116 337 137.0 347.0Q158 357 187.0 364.0Q216 371 248 371Q269 371 286.0 367.0Q303 363 315.5 354.0Q328 345 334.0 331.5Q340 318 340 299V250Q317 263 283.5 272.0Q250 281 206 281Q120 281 73.0 242.0Q26 203 26 136Q26 89 48.5 56.5Q71 24 108.0 7.0Q145 -10 188 -10Q230 -10 268.5 5.0Q307 20 332 50Q336 56 340 62V0H465V326Q465 373 439.0 405.5Q413 438 367.0 455.0Q321 472 262 472Q198 472 146.0 454.5Q94 437 58 418ZM156 143Q156 163 165.0 176.5Q174 190 193.0 197.5Q212 205 242 205Q279 205 313 195Q327 191 340 185V184Q340 151 325.0 127.5Q310 104 286.0 91.5Q262 79 232 79Q211 79 193.5 86.5Q176 94 166.0 108.5Q156 123 156 143Z" fill="url(#ldA)"/></g>
@@ -54,31 +36,24 @@
 <g class="lg lg-l" style="--i:7"><path transform="translate(268.42 353.40) scale(0.02860 -0.02860)" d="M163 350Q163 422 194.0 478.5Q225 535 278.5 567.0Q332 599 401 599Q472 599 525.5 567.0Q579 535 609.0 478.5Q639 422 639 350Q639 278 608.5 222.0Q578 166 524.5 133.5Q471 101 401 101Q332 101 278.5 133.5Q225 166 194.0 222.0Q163 278 163 350ZM38 350Q38 272 65.0 205.0Q92 138 141.0 89.0Q190 40 256.5 12.5Q323 -15 401 -15Q481 -15 547.0 12.5Q613 40 662.0 89.0Q711 138 738.0 205.0Q765 272 765 350Q765 429 738.0 495.0Q711 561 661.5 609.5Q612 658 546.0 685.5Q480 713 401 713Q324 713 257.5 685.5Q191 658 141.5 609.5Q92 561 65.0 495.0Q38 429 38 350Z" fill="#C9D3EA"/></g>
 <g class="lg lg-l" style="--i:8"><path transform="translate(303.42 353.40) scale(0.02860 -0.02860)" d="M589 700V230L78 735V0H194V470L705 -35V700Z" fill="#C9D3EA"/></g>
 <g class="lg lg-l" style="--i:9"><path transform="translate(337.90 353.40) scale(0.02860 -0.02860)" d="M124 226 36 164Q59 116 98.5 75.0Q138 34 190.5 9.5Q243 -15 304 -15Q349 -15 390.5 -0.5Q432 14 465.0 40.5Q498 67 517.5 106.0Q537 145 537 194Q537 240 521.0 274.5Q505 309 479.5 334.0Q454 359 422.5 376.0Q391 393 359 404Q303 424 268.0 443.0Q233 462 216.5 483.5Q200 505 200 532Q200 562 223.0 584.5Q246 607 295 607Q330 607 356.5 593.5Q383 580 403.0 557.5Q423 535 437 509L532 563Q515 600 483.0 634.0Q451 668 405.0 690.5Q359 713 297 713Q234 713 184.5 689.0Q135 665 106.0 622.5Q77 580 77 524Q77 475 96.0 440.5Q115 406 144.0 382.5Q173 359 205.0 343.5Q237 328 263 319Q307 303 341.0 286.5Q375 270 393.5 246.5Q412 223 412 185Q412 143 382.0 117.0Q352 91 304 91Q265 91 232.5 108.0Q200 125 173.5 155.0Q147 185 124 226Z" fill="#C9D3EA"/></g></svg>
-  <span class="loader__skip">click to skip</span>
 </div>
 
 <header class="nav">
   <div class="wrap nav__inner">
     <a href="#top" class="nav__logo" aria-label="ATG Animations home">
-      <img src="assets/brand/logo-white-tight.svg" alt="ATG Animations" width="92" height="62">
+      <img src="assets/brand/logo-white-tight.svg" alt="ATG Animations" width="80" height="54">
     </a>
-    <nav class="nav__links" aria-label="Main">
-      <a href="#work">Work</a>
-      <a href="#services">Services</a>
-      <a href="#process">Process</a>
-      <a href="#about">About</a>
-      <a href="#contact" class="btn btn--small">Start a project <span class="tri" aria-hidden="true"></span></a>
-    </nav>
+    <a href="#contact" class="btn btn--small">Start a project <span class="tri" aria-hidden="true"></span></a>
   </div>
 </header>
 
 <main id="top">
-
-  <!-- ===================== HERO ===================== -->
-  <section class="hero" id="hero">
+  <!-- ============ Screen 1: what I do + the reel ============ -->
+  <section class="hero">
     <div class="wrap hero__grid">
+
       <div class="hero__copy">
-        <p class="eyebrow eyebrow--light"><span class="rec" aria-hidden="true"></span>Health animation studio</p>
+        <p class="eyebrow"><span class="rec" aria-hidden="true"></span>Health animation studio</p>
         <h1 class="kinetic">
           <span class="w"><span style="--i:0">Health</span></span>
           <span class="w"><span style="--i:1">messages</span></span>
@@ -86,306 +61,49 @@
           <span class="w w--squiggle"><span class="grad" style="--i:3">actually</span><svg class="squiggle" viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path d="M4 16 C 40 4, 70 22, 105 12 S 170 4, 205 14 S 268 20, 296 8"/></svg></span>
           <span class="w"><span style="--i:4">watch.</span></span>
         </h1>
-        <p class="lead">I'm Justice, a <strong>pharmacy-trained animator</strong>. I turn health messages into short animated explainers and campaigns that stay medically accurate and still feel clear, fun and never gloomy.</p>
-        <div class="hero__ctas">
-          <a href="#work" class="btn">Watch the work <span class="tri" aria-hidden="true"></span></a>
-          <a href="#contact" class="btn btn--ghost-light">Send me a brief</a>
-        </div>
-      </div>
+        <p class="lead">I'm Justice, a <strong>pharmacy-trained animator</strong>. I make short animated explainers and campaigns that stay medically accurate while feeling clear, fun and never gloomy.</p>
 
-      <div class="stage" id="stage">
-        <div class="stage__canvas">
-          <span class="stage__label stage__label--l">SC.01 · HELLO</span>
-          <span class="stage__label stage__label--r">24 FPS</span>
-          <svg class="scene" viewBox="0 0 560 400" role="img" aria-label="Animated capsule and heart characters bouncing">
-            <!-- floor -->
-            <line x1="40" y1="352" x2="540" y2="352" class="floor"/>
-            <!-- motion guide + onion skin -->
-            <g class="guide">
-              <line x1="170" y1="70" x2="170" y2="340" />
-              <rect x="130" y="62" width="80" height="130" rx="40" class="ghost g1"/>
-              <rect x="130" y="135" width="80" height="130" rx="40" class="ghost g2"/>
-              <path d="M170 56 l7 7 -7 7 -7 -7z" class="kf-mark"/>
-              <path d="M170 344 l7 7 -7 7 -7 -7z" class="kf-mark"/>
-            </g>
-            <!-- capsule shadow -->
-            <ellipse cx="170" cy="354" rx="48" ry="9" class="cap-shadow"/>
-            <!-- capsule character -->
-            <g class="cap-bounce">
-              <g class="cap-squash">
-                <path d="M130 275 V250 a40 40 0 0 1 80 0 V275 Z" fill="#6D4AFF"/>
-                <path d="M130 275 V300 a40 40 0 0 0 80 0 V275 Z" fill="#22D3EE"/>
-                <rect x="142" y="222" width="10" height="34" rx="5" fill="#fff" opacity=".35"/>
-                <g class="eyes" data-eyes>
-                  <g class="blink">
-                    <ellipse cx="156" cy="262" rx="9" ry="10" fill="#fff"/>
-                    <ellipse cx="184" cy="262" rx="9" ry="10" fill="#fff"/>
-                  </g>
-                  <g class="pupils"><circle cx="157" cy="263" r="4.5" fill="#0E1222"/><circle cx="185" cy="263" r="4.5" fill="#0E1222"/></g>
-                </g>
-                <circle cx="146" cy="285" r="5" fill="#FF7BB0" opacity=".7"/>
-                <circle cx="194" cy="285" r="5" fill="#FF7BB0" opacity=".7"/>
-                <path d="M161 284 q9 10 18 0" fill="none" stroke="#0E1222" stroke-width="3.5" stroke-linecap="round"/>
-              </g>
-            </g>
-
-            <!-- ECG line -->
-            <path class="ecg" d="M262 300 H330 l10 -26 l14 52 l12 -44 l8 18 H420 l8 -14 l8 14 H456"/>
-
-            <!-- heart character -->
-            <g class="heart">
-              <path d="M410 252 C 342 208, 346 140, 386 138 C 400 137, 410 148, 410 160 C 410 148, 420 137, 434 138 C 474 140, 478 208, 410 252 Z" fill="url(#pinkGrad)"/>
-              <path d="M372 168 c 2 -12 10 -18 18 -18" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".55"/>
-              <g class="eyes" data-eyes>
-                <g class="blink blink--late">
-                  <ellipse cx="396" cy="186" rx="7" ry="8" fill="#fff"/>
-                  <ellipse cx="424" cy="186" rx="7" ry="8" fill="#fff"/>
-                </g>
-                <g class="pupils"><circle cx="397" cy="187" r="3.6" fill="#0E1222"/><circle cx="425" cy="187" r="3.6" fill="#0E1222"/></g>
-              </g>
-              <path d="M403 204 q7 8 14 0" fill="none" stroke="#0E1222" stroke-width="3" stroke-linecap="round"/>
-            </g>
-
-            <!-- ribbon -->
-            <g class="ribbon">
-              <path d="M488 286c-9 0-15 7-15 16 0 11 9 21 15 28 6-7 15-17 15-28 0-9-6-16-15-16Z M479 322l-13 32 10-3 5 8 12-27 M497 322l13 32-10-3-5 8" fill="none" stroke="#FF5FA2" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-            </g>
-
-            <!-- sparkles -->
-            <path class="spark s1" d="M70 120 l4 12 12 4 -12 4 -4 12 -4 -12 -12 -4 12 -4z"/>
-            <path class="spark s2" d="M300 70 l3 9 9 3 -9 3 -3 9 -3 -9 -9 -3 9 -3z"/>
-            <path class="spark s3" d="M510 110 l3 9 9 3 -9 3 -3 9 -3 -9 -9 -3 9 -3z"/>
-            <g class="plus p1"><rect x="262" y="180" width="18" height="5" rx="2.5"/><rect x="268.5" y="173.5" width="5" height="18" rx="2.5"/></g>
-            <g class="plus p2"><rect x="70" y="260" width="14" height="4" rx="2"/><rect x="75" y="255" width="4" height="14" rx="2"/></g>
-          </svg>
-        </div>
-
-        <!-- After Effects-style timeline -->
-        <div class="tl" aria-label="Animation timeline">
-          <div class="tl__bar">
-            <button class="tl__play" id="tlPlay" type="button" aria-label="Pause animation" aria-pressed="false">
-              <svg class="i-pause" viewBox="0 0 24 24"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
-              <svg class="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.4-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5Z"/></svg>
-            </button>
-            <span class="tl__tc" id="tc">0:00:00:00</span>
-            <span class="tl__comp">atg_hero_FINAL_v12.aep</span>
-          </div>
-          <div class="tl__rows">
-            <div class="tl__row"><span class="tl__name"><i style="--c:#6D4AFF"></i>capsule</span><span class="tl__track"><i style="--x:0%"></i><i style="--x:25%"></i><i style="--x:50%"></i><i style="--x:75%"></i><i style="--x:100%"></i></span></div>
-            <div class="tl__row"><span class="tl__name"><i style="--c:#FF5FA2"></i>heart</span><span class="tl__track"><i style="--x:0%"></i><i style="--x:12%"></i><i style="--x:50%"></i><i style="--x:62%"></i><i style="--x:100%"></i></span></div>
-            <div class="tl__row"><span class="tl__name"><i style="--c:#22D3EE"></i>ecg</span><span class="tl__track"><span class="tl__bar-clip"></span></span></div>
-            <div class="tl__row"><span class="tl__name"><i style="--c:#FFC94D"></i>sparkle</span><span class="tl__track"><i style="--x:10%"></i><i style="--x:35%"></i><i style="--x:60%"></i><i style="--x:85%"></i></span></div>
-            <div class="tl__ph" aria-hidden="true"><i id="playhead"></i></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== MARQUEE ===================== -->
-  <div class="marquee" aria-hidden="true">
-    <div class="marquee__track">
-      <span>Animated explainers</span><b>✦</b><span>Campaign series</span><b>✦</b><span>Character animation</span><b>✦</b><span>Motion design</span><b>✦</b><span>Social cut-downs</span><b>✦</b><span>Health awareness</span><b>✦</b>
-      <span>Animated explainers</span><b>✦</b><span>Campaign series</span><b>✦</b><span>Character animation</span><b>✦</b><span>Motion design</span><b>✦</b><span>Social cut-downs</span><b>✦</b><span>Health awareness</span><b>✦</b>
-    </div>
-  </div>
-
-  <!-- ===================== WORK ===================== -->
-  <section class="section" id="work">
-    <div class="wrap">
-      <div class="section__head reveal">
-        <p class="eyebrow"><span class="kf" aria-hidden="true"></span>The reel</p>
-        <h2>Selected work</h2>
-        <p class="section__sub">Made for <strong>NGOs</strong>, <strong>clinics</strong>, <strong>pharmacies</strong> and <strong>health startups</strong>.</p>
-      </div>
-      <div id="featured"></div>
-    </div>
-    <div class="wrap" id="filmWrap"></div>
-    <div class="wrap"><div class="grid" id="grid"></div></div>
-  </section>
-
-  <!-- ===================== WHY (keyframes) ===================== -->
-  <section class="section section--tint" id="services">
-    <div class="wrap">
-      <div class="section__head reveal">
-        <p class="eyebrow"><span class="kf" aria-hidden="true"></span>Why ATG</p>
-        <h2>Science first. Then the fun bit.</h2>
-      </div>
-      <div class="keys">
-        <article class="key reveal">
-          <div class="key__anim">
-            <svg viewBox="0 0 200 130" aria-hidden="true">
-              <g class="mol">
-                <polygon points="100,30 126,45 126,75 100,90 74,75 74,45" fill="none" stroke="#6D4AFF" stroke-width="4" stroke-linejoin="round"/>
-                <circle cx="100" cy="30" r="7" fill="#6D4AFF"/><circle cx="126" cy="45" r="7" fill="#22D3EE"/><circle cx="126" cy="75" r="7" fill="#6D4AFF"/>
-                <circle cx="100" cy="90" r="7" fill="#22D3EE"/><circle cx="74" cy="75" r="7" fill="#6D4AFF"/><circle cx="74" cy="45" r="7" fill="#22D3EE"/>
-              </g>
-              <g class="check"><circle cx="150" cy="92" r="18" fill="#16C784"/><path d="M141 92 l6 6 12 -12" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></g>
-            </svg>
-          </div>
-          <span class="key__label"><i></i>KEY 01</span>
-          <h3>Medically accurate</h3>
-          <p>I trained in pharmacy, so I understand the science behind your message. Nothing gets lost or distorted between the brief and the final cut.</p>
-        </article>
-        <article class="key reveal" style="--d:.1s">
-          <div class="key__anim">
-            <svg viewBox="0 0 200 130" aria-hidden="true">
-              <line x1="16" y1="112" x2="184" y2="112" stroke="#C9D3EA" stroke-width="2" stroke-dasharray="4 6"/>
-              <g fill="none" stroke="#6D4AFF" stroke-width="2" opacity=".35">
-                <circle cx="44" cy="58" r="10"/><circle cx="62" cy="40" r="10" opacity=".7"/><circle cx="82" cy="58" r="10" opacity=".5"/>
-              </g>
-              <g class="ballX"><g class="ballY"><circle class="ballS" cx="30" cy="100" r="12" fill="url(#brandGrad)"/></g></g>
-            </svg>
-          </div>
-          <span class="key__label"><i></i>KEY 02</span>
-          <h3>Clear, fun, never gloomy</h3>
-          <p>Serious topics don't need scary visuals. Bright, friendly animation keeps people watching long enough for the message to stick.</p>
-        </article>
-        <article class="key reveal" style="--d:.2s">
-          <div class="key__anim">
-            <svg viewBox="0 0 200 130" aria-hidden="true">
-              <rect x="76" y="14" width="48" height="96" rx="10" fill="#0E1222"/>
-              <rect x="81" y="24" width="38" height="70" rx="4" fill="url(#brandGrad)"/>
-              <path d="M95 50 v18 l15 -9z" fill="#fff"/>
-              <g class="hearts" fill="#FF5FA2">
-                <path class="h1" d="M140 80 c-6 -5 -10 -8 -10 -12 a5 5 0 0 1 10 -1 a5 5 0 0 1 10 1 c0 4 -4 7 -10 12z"/>
-                <path class="h2" d="M58 86 c-5 -4 -8 -6 -8 -10 a4 4 0 0 1 8 -1 a4 4 0 0 1 8 1 c0 4 -3 6 -8 10z"/>
-                <path class="h3" d="M150 96 c-4 -3 -6 -5 -6 -8 a3 3 0 0 1 6 -1 a3 3 0 0 1 6 1 c0 3 -2 5 -6 8z"/>
-              </g>
-            </svg>
-          </div>
-          <span class="key__label"><i></i>KEY 03</span>
-          <h3>Made to be shared</h3>
-          <p>Short formats sized for Instagram, TikTok, WhatsApp and YouTube, so your audience can share them in a tap.</p>
-        </article>
-      </div>
-
-      <div class="services reveal">
-        <a class="service" href="#contact">
-          <span class="service__num">01</span>
-          <span class="service__title">Animated explainers</span>
-          <span class="service__desc">30–90 second videos that make one health topic easy to understand.</span>
-          <span class="service__arrow" aria-hidden="true">→</span>
-        </a>
-        <a class="service" href="#contact">
-          <span class="service__num">02</span>
-          <span class="service__title">Campaign series</span>
-          <span class="service__desc">Multi-part series for awareness months and launches, with one consistent look.</span>
-          <span class="service__arrow" aria-hidden="true">→</span>
-        </a>
-        <a class="service" href="#contact">
-          <span class="service__num">03</span>
-          <span class="service__title">Campaign design</span>
-          <span class="service__desc">Matching posts, carousels and cut-downs so the campaign shows up everywhere.</span>
-          <span class="service__arrow" aria-hidden="true">→</span>
-        </a>
-      </div>
-
-      <div class="formats reveal">
-        <span class="formats__title">Delivered in every format</span>
-        <span class="fmt"><i style="aspect-ratio:16/9;width:64px"></i>16:9<small>YouTube · web</small></span>
-        <span class="fmt"><i style="aspect-ratio:9/16;width:26px"></i>9:16<small>Reels · TikTok · Status</small></span>
-        <span class="fmt"><i style="aspect-ratio:1;width:40px"></i>1:1<small>Feed posts</small></span>
-        <span class="fmt"><i style="aspect-ratio:4/5;width:36px"></i>4:5<small>Instagram</small></span>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== PROCESS (storyboard) ===================== -->
-  <section class="section section--paper" id="process">
-    <div class="wrap">
-      <div class="section__head reveal">
-        <p class="eyebrow"><span class="kf" aria-hidden="true"></span>How it works</p>
-        <h2>The storyboard</h2>
-        <p class="section__sub">From your brief to post-ready video in four shots.</p>
-      </div>
-      <ol class="board">
-        <li class="panel reveal">
-          <div class="panel__top"><span>SC 01</span><span>BRIEF</span></div>
-          <div class="panel__frame">
-            <svg viewBox="0 0 200 112" class="sketch" aria-hidden="true">
-              <rect x="50" y="26" width="100" height="62" rx="6"/>
-              <path d="M50 30 l50 34 50 -34"/>
-              <path d="M140 18 c-4 -4 -8 -5 -8 -9 a4 4 0 0 1 8 -1 a4 4 0 0 1 8 1 c0 4 -4 5 -8 9z" class="fill-pink"/>
-              <path d="M24 60 h14 M20 70 h18 M28 80 h10"/>
-            </svg>
-          </div>
-          <h3>Send your brief</h3>
-          <p class="note">topic + audience + deadline. That's all I need!</p>
-        </li>
-        <li class="panel reveal" style="--d:.1s">
-          <div class="panel__top"><span>SC 02</span><span>IDEA</span></div>
-          <div class="panel__frame">
-            <svg viewBox="0 0 200 112" class="sketch" aria-hidden="true">
-              <path d="M100 22 a26 26 0 0 0 -16 46 v10 h32 v-10 a26 26 0 0 0 -16 -46z" class="fill-yellow"/>
-              <path d="M88 86 h24 M92 94 h16"/>
-              <path d="M100 8 v-4 M62 24 l-6 -6 M138 24 l6 -6 M52 50 h-8 M148 50 h8"/>
-            </svg>
-          </div>
-          <h3>Get an idea back</h3>
-          <p class="note">I reply with a concept for your message</p>
-        </li>
-        <li class="panel reveal" style="--d:.2s">
-          <div class="panel__top"><span>SC 03</span><span>BOARDS</span></div>
-          <div class="panel__frame">
-            <svg viewBox="0 0 200 112" class="sketch" aria-hidden="true">
-              <rect x="24" y="28" width="44" height="30" rx="3"/><rect x="78" y="28" width="44" height="30" rx="3"/><rect x="132" y="28" width="44" height="30" rx="3"/>
-              <circle cx="46" cy="43" r="7"/><path d="M92 50 l8 -12 8 12z"/><path d="M144 46 q10 -10 20 0"/>
-              <path d="M24 72 h40 M78 72 h36 M132 72 h40 M24 80 h28 M78 80 h30 M132 80 h24"/>
-              <path d="M150 104 l30 -30 6 6 -30 30 -8 2z" class="fill-violet"/>
-            </svg>
-          </div>
-          <h3>Script & storyboard</h3>
-          <p class="note">we agree on words + look before animating</p>
-        </li>
-        <li class="panel reveal" style="--d:.3s">
-          <div class="panel__top"><span>SC 04</span><span>FINAL</span></div>
-          <div class="panel__frame">
-            <svg viewBox="0 0 200 112" class="sketch" aria-hidden="true">
-              <rect x="44" y="18" width="112" height="70" rx="6"/>
-              <path d="M92 38 v30 l26 -15z" class="fill-cyan"/>
-              <path d="M88 100 h24 M100 88 v12"/>
-              <path d="M30 22 l-8 -6 M170 22 l8 -6 M26 60 h-10 M174 60 h10"/>
-            </svg>
-          </div>
-          <h3>Animate & deliver</h3>
-          <p class="note">every format you need, ready to post ✦</p>
-        </li>
-      </ol>
-    </div>
-  </section>
-
-  <!-- ===================== ABOUT ===================== -->
-  <section class="section section--dark" id="about">
-    <div class="wrap about">
-      <div class="about__mark reveal">
-        <button type="button" class="jelly" aria-label="Bounce the logo">
-          <img src="assets/brand/profile.svg" alt="" width="240" height="240">
-        </button>
-        <span class="about__note">poke me!<svg viewBox="0 0 60 40" aria-hidden="true"><path d="M4 6 C 20 4, 40 12, 50 32 M50 32 l-10 -3 M50 32 l2 -10"/></svg></span>
-      </div>
-      <div class="reveal" style="--d:.1s">
-        <p class="eyebrow eyebrow--light"><span class="kf" aria-hidden="true"></span>About</p>
-        <h2>Hi, I'm Justice.</h2>
-        <p>I'm a pharmacy-trained animator and designer, and the person behind ATG Animations. I create short animated explainers and campaign designs that turn health messages into content people actually watch and share.</p>
-        <p>Because I understand the science, your message stays medically accurate while still feeling clear, fun and never gloomy. My recent work includes a six-part breast cancer awareness series for Medical Scholar Board's Pink October campaign.</p>
-        <ul class="chips">
-          <li>Pharmacy-trained</li><li>Explainers & campaigns</li><li>6-part Pink October series</li>
+        <ul class="offer" aria-label="What I do">
+          <li><i style="--c:#6D4AFF"></i>Animated explainers</li>
+          <li><i style="--c:#FF5FA2"></i>Campaign series</li>
+          <li><i style="--c:#22D3EE"></i>Campaign design</li>
         </ul>
+        <p class="for">For NGOs · clinics · pharmacies · health startups</p>
+
+        <div class="hero__ctas">
+          <a href="#contact" class="btn">Start a project <span class="tri" aria-hidden="true"></span></a>
+          <a href="#reel" class="btn btn--ghost" id="watchBtn">Watch the reel</a>
+        </div>
+      </div>
+
+      <!-- The reel: player + editing-timeline episode picker -->
+      <div class="reel" id="reel">
+        <div class="reel__screen">
+          <span class="reel__label reel__label--l" id="reelScene">SC.01</span>
+          <span class="reel__label reel__label--r">24 FPS</span>
+          <div class="player" id="player"></div>
+        </div>
+        <div class="now" id="now" aria-live="polite"></div>
+        <div class="tl" aria-label="Choose a video">
+          <div class="tl__bar">
+            <span class="tl__tc" id="tc">EP 01 / 06</span>
+            <span class="tl__comp">atg_reel.aep</span>
+          </div>
+          <div class="tl__rows" id="tracks"></div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ===================== CONTACT ===================== -->
-  <section class="section section--grad" id="contact">
-    <div class="wrap contact">
-      <div class="reveal">
-        <p class="eyebrow eyebrow--white"><span class="kf" aria-hidden="true"></span>Start a project</p>
-        <h2>Let's make your message <em>move.</em></h2>
-        <p class="lead lead--white">Send me your <strong>topic</strong>, <strong>audience</strong> and <strong>deadline</strong>, and I'll reply with an idea.</p>
-        <ul class="contact__links" id="contactLinks"></ul>
+  <!-- ============ Screen 2: call to action ============ -->
+  <section class="cta" id="contact">
+    <div class="wrap cta__grid">
+      <div class="cta__copy">
+        <h2>Got a health message to share?</h2>
+        <p>Send me your <strong>topic</strong>, <strong>audience</strong> and <strong>deadline</strong>, and I'll reply with an idea.</p>
+        <ul class="cta__links" id="contactLinks"></ul>
       </div>
-      <div class="form-wrap reveal" style="--d:.1s">
+      <div class="form-wrap">
         <svg class="peeker" viewBox="0 0 120 70" aria-hidden="true">
           <path d="M20 70 V40 a40 40 0 0 1 80 0 V70 Z" fill="#6D4AFF"/>
           <rect x="32" y="16" width="9" height="26" rx="4.5" fill="#fff" opacity=".35"/>
@@ -396,31 +114,22 @@
           <circle cx="18" cy="66" r="8" fill="#6D4AFF"/><circle cx="102" cy="66" r="8" fill="#6D4AFF"/>
         </svg>
         <form class="form" id="contactForm">
-          <label>Your name<input name="name" required autocomplete="name"></label>
-          <label>Email<input name="email" type="email" required autocomplete="email"></label>
-          <label>Organisation<input name="organisation" autocomplete="organization"></label>
-          <label>Topic, audience & deadline<textarea name="message" rows="4" required placeholder="e.g. Malaria prevention for parents of under-5s, needed by 1 March"></textarea></label>
+          <div class="form__row">
+            <label>Name<input name="name" required autocomplete="name"></label>
+            <label>Email<input name="email" type="email" required autocomplete="email"></label>
+          </div>
+          <label>Topic, audience & deadline<textarea name="message" rows="3" required placeholder="e.g. Malaria prevention for parents of under-5s, needed by 1 March"></textarea></label>
           <button class="btn" type="submit">Send brief <span class="tri" aria-hidden="true"></span></button>
           <p class="form__note" id="formNote" role="status"></p>
         </form>
       </div>
     </div>
+    <footer class="wrap footer">
+      <span>© <span id="year"></span> ATG Animations</span>
+      <span class="footer__made">Made frame by frame <span class="bounce-dot" aria-hidden="true"></span></span>
+    </footer>
   </section>
 </main>
-
-<footer class="footer">
-  <div class="wrap footer__inner">
-    <img src="assets/brand/logo-white-tight.svg" alt="ATG Animations" width="86" height="58">
-    <p class="footer__made">Made frame by frame <span class="bounce-dot" aria-hidden="true"></span></p>
-    <p>© <span id="year"></span> ATG Animations</p>
-  </div>
-</footer>
-
-<!-- Video lightbox -->
-<dialog class="modal" id="modal" aria-label="Project">
-  <button class="modal__close" type="button" aria-label="Close">×</button>
-  <div class="modal__body" id="modalBody"></div>
-</dialog>
 
 <script src="js/projects.js"></script>
 <script src="js/main.js"></script>
