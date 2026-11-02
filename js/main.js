@@ -273,7 +273,9 @@
   }
 
   // Shareable links: yoursite.com/#work/pink-october/3 scrolls to that card and selects episode 3
-  (function () {
+  window.addEventListener("hashchange", openFromHash);
+  openFromHash();
+  function openFromHash() {
     var m = location.hash.match(/^#work\/([\w-]+)(?:\/(\d+))?/);
     if (!m) return;
     players.forEach(function (pl) {
@@ -283,7 +285,7 @@
       pl.warm();
       requestAnimationFrame(function () { pl.card.scrollIntoView({ block: "center" }); });
     });
-  })();
+  }
 
   /* ================= Eyes follow the cursor ================= */
   if (!reduceMotion) {
