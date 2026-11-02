@@ -30,8 +30,7 @@ window.PROJECTS = [
     title: "Pink October: Breast Cancer Awareness Series",
     client: "Medical Scholar Board (US NGO)",
     category: "Campaign series · 6 episodes",
-    summary:
-      "A six-part animated series for Medical Scholar Board's Pink October campaign: short, medically accurate explainers that make breast cancer awareness clear, hopeful and easy to share.",
+    summary: "Medically accurate explainers that make breast cancer awareness clear and hopeful.",
     role: "",   // e.g. "Script, design & animation"
     tools: "",  // e.g. "After Effects, Illustrator"
     video: "",  // link to the full series or episode 1
