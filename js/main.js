@@ -99,7 +99,6 @@
         '<span class="pcard__num">' + pad(i + 1) + " / " + pad(projects.length) + "</span>" +
         (p.category ? '<span class="tag">' + esc(p.category) + "</span>" : "") +
         "<h3>" + esc(p.title) + "</h3>" +
-        (p.client ? '<p class="pcard__client">CLIENT · ' + esc(p.client).toUpperCase() + "</p>" : "") +
         (p.summary ? '<p class="pcard__sum">' + esc(p.summary) + "</p>" : "") +
         (p.role || p.tools ? '<dl class="pcard__meta">' + (p.role ? "<dt>Role</dt><dd>" + esc(p.role) + "</dd>" : "") + (p.tools ? "<dt>Tools</dt><dd>" + esc(p.tools) + "</dd>" : "") + "</dl>" : "") +
         (multi ? '<p class="pcard__now" data-now></p>' : "") +
@@ -130,7 +129,7 @@
       box.innerHTML =
         '<button class="poster' + (accent && !img ? " poster--" + esc(accent) : "") + (intent && c.video ? " is-loading" : "") + '" type="button" aria-label="Play ' + esc(c.title) + '">' +
           (img ? '<img src="' + esc(img) + '" alt="" loading="lazy">' : (accent === "pink" ? RIBBON : "")) +
-          (img ? "" : '<span class="poster__title"><small>' + esc(multi ? shortName(project) : (project.client || project.category || "")).toUpperCase() + "</small>" + (multi ? "EP " + pad(cur + 1) : esc(shortName(project))) + "</span>") +
+          (img ? "" : '<span class="poster__title"><small>' + esc(multi ? shortName(project) : (project.category || "")).toUpperCase() + "</small>" + (multi ? "EP " + pad(cur + 1) : esc(shortName(project))) + "</span>") +
           '<span class="poster__play" aria-hidden="true">' + PLAY_ICON + "</span>" +
           (c.video ? "" : '<span class="poster__soon">VIDEO SOON</span>') +
         "</button>";
