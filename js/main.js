@@ -163,6 +163,21 @@
     if (d && d.event === "ready") onReady();
   });
 
+  /* ---------- Full screen ----------
+     Opens the whole player full screen and starts the video. (Vimeo's own
+     controls also have a full-screen button; on iPhone that one is used.) */
+  var canFullscreen = !!(document.fullscreenEnabled || document.webkitFullscreenEnabled);
+  function fullscreen() {
+    var req = player.requestFullscreen || player.webkitRequestFullscreen;
+    if (!req) return;
+    var r = req.call(player);
+    if (r && r.catch) r.catch(function () {});
+    play();
+  }
+  document.addEventListener("click", function (e) {
+    if (e.target.closest && e.target.closest("#fsBtn")) fullscreen();
+  });
+
   function play() {
     var clip = tracks[cur.t].clips[cur.c];
     if (!clip.video) { // nothing uploaded yet: give the poster a little shake instead
@@ -233,7 +248,9 @@
     $("#reelScene").textContent = "SC." + pad(t + 1) + (multi ? " · EP " + pad(c + 1) : "");
     $("#now").innerHTML = "<b>" + esc(multi ? shortName(p) + " · " + clip.title : p.title) + "</b><span>" +
       esc([p.category, p.client].filter(Boolean).join(" · ")).toUpperCase() + "</span>" +
-      (vimeoId(clip.video) ? '<a class="now__alt" href="https://vimeo.com/' + vimeoId(clip.video) + '" target="_blank" rel="noopener">Watch on Vimeo ↗</a>' : "");
+      (clip.video && canFullscreen ? '<button class="now__fs" type="button" id="fsBtn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>Full screen</button>' : "") +
+      (vimeoId(clip.video) ? '<a class="now__alt" href="https://vimeo.com/' + vimeoId(clip.video) + '" target="_blank" rel="noopener">Watch on Vimeo ↗</a>' : "") +
+      (p.summary ? '<p class="now__sum" title="' + esc(p.summary) + '">' + esc(p.summary) + "</p>" : "");
     showPoster(intent);
 
     var hash = "#work/" + p.slug + (multi ? "/" + (c + 1) : "");

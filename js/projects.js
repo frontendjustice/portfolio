@@ -46,6 +46,17 @@ window.PROJECTS = [
       { title: "Episode 5", video: "", thumbnail: "" },
       { title: "Episode 6", video: "", thumbnail: "" }
     ]
+  },
+  {
+    slug: "world-diabetes-day",
+    title: "A Short Story: World Diabetes Day Spec Video",
+    short: "World Diabetes Day",   // shorter name used on the timeline
+    client: "",
+    category: "Awareness video",
+    summary: "Diabetes is best managed together.",
+    video: "https://vimeo.com/1242550627",
+    thumbnail: "",
+    accent: "blue"
   }
 
   /* ---- Example of another project (remove the slashes-star to use) ----
