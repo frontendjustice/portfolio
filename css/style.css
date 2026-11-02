@@ -227,3 +227,8 @@ h1 { font-size: clamp(2.4rem, 4.6vw, 4.1rem); }
   .js .kinetic .w > span { transform: none; }
   .squiggle path { stroke-dashoffset: 0; }
 }
+
+/* real cover frames on the timeline + clips still waiting for a video */
+.clip--thumb { background-size: cover; background-position: center; }
+.clip--empty { opacity: .55; }
+.clip--empty:hover, .clip--empty[aria-current="true"] { opacity: .85; }

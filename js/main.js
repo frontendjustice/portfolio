@@ -54,7 +54,7 @@
     if (!url) return "";
     var m;
     if ((m = url.match(/vimeo\.com\/(?:video\/)?(\d+)(?:\/([a-zA-Z0-9]+))?/))) {
-      return "https://player.vimeo.com/video/" + m[1] + (m[2] ? "?h=" + m[2] + "&" : "?") + "title=0&byline=0&portrait=0&autoplay=1";
+      return "https://player.vimeo.com/video/" + m[1] + (m[2] ? "?h=" + m[2] + "&" : "?") + "badge=0&autopause=0&title=0&byline=0&portrait=0&autoplay=1";
     }
     if ((m = url.match(/(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/)|youtu\.be\/)([\w-]{11})/))) {
       return "https://www.youtube-nocookie.com/embed/" + m[1] + "?rel=0&modestbranding=1&autoplay=1";
@@ -65,12 +65,31 @@
     return url;
   }
 
+  // Vimeo cover images are fetched automatically, so no thumbnail files are needed
+  var thumbCache = {};
+  function vimeoThumb(clip, done) {
+    var m = (clip.video || "").match(/vimeo\.com\/(?:video\/)?(\d+)/);
+    if (!m || clip.thumbnail || !window.fetch) return;
+    var id = m[1];
+    if (!thumbCache[id]) {
+      thumbCache[id] = fetch("https://vimeo.com/api/oembed.json?width=1280&url=" + encodeURIComponent("https://vimeo.com/" + id))
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (d) { return d && d.thumbnail_url ? d.thumbnail_url : null; })
+        .catch(function () { return null; });
+    }
+    thumbCache[id].then(function (url) { if (url) { clip._thumb = url; done(url); } });
+  }
+
   var player = $("#player");
   function showPoster() {
     var tr = tracks[cur.t]; if (!tr) return;
     var p = tr.project, clip = tr.clips[cur.c], multi = tr.clips.length > 1;
     var accent = p.accent || "";
-    var img = clip.thumbnail || (!multi && p.thumbnail);
+    var img = clip.thumbnail || clip._thumb || (!multi && p.thumbnail);
+    if (!img) {
+      var want = clip;
+      vimeoThumb(clip, function () { if (tracks[cur.t].clips[cur.c] === want && $("#poster")) showPoster(); });
+    }
     player.innerHTML =
       '<button class="poster' + (accent && !img ? " poster--" + esc(accent) : "") + '" type="button" id="poster" aria-label="Play ' + esc(clip.title) + '">' +
         (img ? '<img src="' + esc(img) + '" alt="">' : (accent === "pink" ? RIBBON : "")) +
@@ -98,10 +117,20 @@
         '<span class="track__clips">' +
           tr.clips.map(function (clip, ci) {
             var label = tr.clips.length > 1 ? "EP " + pad(ci + 1) : shortName(p);
-            return '<button class="clip' + (p.accent ? " clip--" + esc(p.accent) : "") + '" type="button" data-t="' + ti + '" data-c="' + ci + '" title="' + esc(clip.title) + '"><span>' + esc(label) + "</span></button>";
+            return '<button class="clip' + (p.accent ? " clip--" + esc(p.accent) : "") + (clip.video ? "" : " clip--empty") + '" type="button" data-t="' + ti + '" data-c="' + ci + '" title="' + esc(clip.title) + (clip.video ? "" : " (coming soon)") + '"><span>' + esc(label) + "</span></button>";
           }).join("") +
         "</span></div>";
     }).join("");
+    // show each clip's cover frame on the timeline, like an editor's thumbnail track
+    tracks.forEach(function (tr, ti) {
+      tr.clips.forEach(function (clip, ci) {
+        function paint(url) {
+          var b = $('.clip[data-t="' + ti + '"][data-c="' + ci + '"]');
+          if (b) { b.style.backgroundImage = "linear-gradient(rgba(14,18,34,.25), rgba(14,18,34,.6)), url(\"" + url.replace(/"/g, "") + "\")"; b.classList.add("clip--thumb"); }
+        }
+        if (clip.thumbnail) paint(clip.thumbnail); else vimeoThumb(clip, paint);
+      });
+    });
     $$(".clip").forEach(function (b) {
       b.addEventListener("click", function () {
         select(+b.getAttribute("data-t"), +b.getAttribute("data-c"));

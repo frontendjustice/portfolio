@@ -39,7 +39,7 @@ window.PROJECTS = [
     accent: "pink",
     featured: true,
     episodes: [
-      { title: "Episode 1", video: "", thumbnail: "" },
+      { title: "What is Breast Cancer?", video: "https://vimeo.com/1242547249", thumbnail: "" },
       { title: "Episode 2", video: "", thumbnail: "" },
       { title: "Episode 3", video: "", thumbnail: "" },
       { title: "Episode 4", video: "", thumbnail: "" },
