@@ -28,7 +28,7 @@
     loader.classList.add("is-gone");
     requestAnimationFrame(function () { document.body.classList.add("is-ready"); });
   } else {
-    var t = setTimeout(ready, 1900);
+    var t = setTimeout(ready, 1150);
     loader.addEventListener("click", function () { clearTimeout(t); ready(); });
   }
 
@@ -72,7 +72,7 @@
     if (!m || clip.thumbnail || !window.fetch) return;
     var id = m[1];
     if (!thumbCache[id]) {
-      thumbCache[id] = fetch("https://vimeo.com/api/oembed.json?width=1280&url=" + encodeURIComponent("https://vimeo.com/" + id))
+      thumbCache[id] = fetch("https://vimeo.com/api/oembed.json?width=960&url=" + encodeURIComponent("https://vimeo.com/" + id))
         .then(function (r) { return r.ok ? r.json() : null; })
         .then(function (d) { return d && d.thumbnail_url ? d.thumbnail_url : null; })
         .catch(function () { return null; });
@@ -80,33 +80,105 @@
     thumbCache[id].then(function (url) { if (url) { clip._thumb = url; done(url); } });
   }
 
+  /* ---------- Player ----------
+     For speed, the Vimeo player for the selected video loads quietly in the
+     background (after the page has painted), behind our branded poster. When it is
+     ready the poster fades away, so pressing play starts instantly and uses Vimeo's
+     own play button (no autoplay blocking on Safari / phones). */
   var player = $("#player");
-  function showPoster() {
+  var frame = null, frameReady = false, wantPlay = false, frameTimer = null;
+  var VIMEO = "https://player.vimeo.com";
+  var saveData = navigator.connection && navigator.connection.saveData;
+
+  function vimeoId(url) { var m = (url || "").match(/vimeo\.com\/(?:video\/)?(\d+)/); return m ? m[1] : ""; }
+
+  function showPoster(intent) {
     var tr = tracks[cur.t]; if (!tr) return;
     var p = tr.project, clip = tr.clips[cur.c], multi = tr.clips.length > 1;
     var accent = p.accent || "";
     var img = clip.thumbnail || clip._thumb || (!multi && p.thumbnail);
     if (!img) {
       var want = clip;
-      vimeoThumb(clip, function () { if (tracks[cur.t].clips[cur.c] === want && $("#poster")) showPoster(); });
+      vimeoThumb(clip, function (url) {
+        var pi = $("#poster");
+        if (tracks[cur.t].clips[cur.c] !== want || !pi) return;
+        // swap in the real cover frame without rebuilding the player
+        $$(".poster__char, .poster__title", pi).forEach(function (n) { n.remove(); });
+        pi.classList.remove("poster--" + accent);
+        pi.insertAdjacentHTML("afterbegin", '<img src="' + esc(url) + '" alt="">');
+      });
     }
+    clearTimeout(frameTimer);
+    frame = null; frameReady = false; wantPlay = !!intent;
+    player.classList.remove("is-live");
     player.innerHTML =
-      '<button class="poster' + (accent && !img ? " poster--" + esc(accent) : "") + '" type="button" id="poster" aria-label="Play ' + esc(clip.title) + '">' +
+      '<button class="poster' + (accent && !img ? " poster--" + esc(accent) : "") + (intent && clip.video ? " is-loading" : "") + '" type="button" id="poster" aria-label="Play ' + esc(clip.title) + '">' +
         (img ? '<img src="' + esc(img) + '" alt="">' : (accent === "pink" ? RIBBON : "")) +
         (img ? "" : '<span class="poster__title"><small>' + esc(shortName(p)).toUpperCase() + "</small>" + (multi ? "EP " + pad(cur.c + 1) : esc(shortName(p))) + "</span>") +
         PLAY + (clip.video ? "" : '<span class="poster__soon">VIDEO SOON</span>') +
       "</button>";
     $("#poster").addEventListener("click", play);
+
+    // Warm up the Vimeo player: right away if the visitor asked to play,
+    // otherwise once the page is idle (skipped on "data saver" connections)
+    if (vimeoId(clip.video)) {
+      if (intent) loadFrame();
+      else if (!saveData) frameTimer = setTimeout(function () {
+        (window.requestIdleCallback || setTimeout)(loadFrame);
+      }, document.readyState === "complete" ? 300 : 1200);
+    }
   }
+
+  function loadFrame() {
+    clearTimeout(frameTimer);
+    if (frame) return;
+    var clip = tracks[cur.t].clips[cur.c];
+    var id = vimeoId(clip.video); if (!id) return;
+    var h = (clip.video.match(/vimeo\.com\/\d+\/([a-zA-Z0-9]+)/) || [])[1];
+    frame = document.createElement("iframe");
+    frame.src = VIMEO + "/video/" + id + "?" + (h ? "h=" + h + "&" : "") + "badge=0&autopause=0&title=0&byline=0&portrait=0&dnt=1";
+    frame.title = clip.title;
+    frame.setAttribute("allow", "autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share");
+    frame.setAttribute("referrerpolicy", "strict-origin-when-cross-origin");
+    frame.setAttribute("allowfullscreen", "");
+    var f = frame;
+    // Fallback in case Vimeo never says "ready" (e.g. a privacy error page): show it anyway
+    frame.addEventListener("load", function () { setTimeout(function () { if (f === frame) onReady(); }, 1500); });
+    player.appendChild(frame);
+  }
+
+  function onReady() {
+    if (frameReady || !frame) return;
+    frameReady = true;
+    player.classList.add("is-live");
+    if (wantPlay) sendPlay();
+  }
+  function sendPlay() {
+    try { frame.contentWindow.postMessage(JSON.stringify({ method: "play" }), VIMEO); } catch (e) {}
+  }
+  window.addEventListener("message", function (e) {
+    if (e.origin !== VIMEO || !frame || e.source !== frame.contentWindow) return;
+    var d = e.data;
+    try { if (typeof d === "string") d = JSON.parse(d); } catch (err) { return; }
+    if (d && d.event === "ready") onReady();
+  });
+
   function play() {
     var clip = tracks[cur.t].clips[cur.c];
-    var src = embedUrl(clip.video);
-    if (!src) { // nothing uploaded yet: give the poster a little shake instead
+    if (!clip.video) { // nothing uploaded yet: give the poster a little shake instead
       var b = $("#poster .poster__play");
       if (b && b.animate && !reduceMotion) b.animate([{ transform: "rotate(0)" }, { transform: "rotate(-14deg)" }, { transform: "rotate(10deg)" }, { transform: "rotate(0)" }], { duration: 400 });
       return;
     }
-    player.innerHTML = '<iframe src="' + esc(src) + '" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="' + esc(clip.title) + '"></iframe>';
+    if (vimeoId(clip.video)) {
+      wantPlay = true;
+      if (frameReady) sendPlay();
+      else { var pi = $("#poster"); if (pi) pi.classList.add("is-loading"); loadFrame(); }
+      return;
+    }
+    // YouTube / Google Drive: load the player on click
+    player.classList.add("is-live");
+    player.innerHTML = '<iframe src="' + esc(embedUrl(clip.video)) + '" allow="autoplay; fullscreen; picture-in-picture; encrypted-media" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen title="' + esc(clip.title) + '"></iframe>';
   }
 
   function renderTracks() {
@@ -133,13 +205,21 @@
     });
     $$(".clip").forEach(function (b) {
       b.addEventListener("click", function () {
-        select(+b.getAttribute("data-t"), +b.getAttribute("data-c"));
-        play();
+        select(+b.getAttribute("data-t"), +b.getAttribute("data-c"), true);
       });
     });
   }
 
-  function select(t, c) {
+  // move the playhead to the chosen clip
+  function movePlayhead() {
+    var active = $('.clip[aria-current="true"]'); if (!active) return;
+    var head = $(".playhead") || document.createElement("i");
+    head.className = "playhead";
+    if (head.parentNode !== active.parentNode) active.parentNode.appendChild(head);
+    head.style.left = (active.offsetLeft + active.offsetWidth / 2) + "px";
+  }
+
+  function select(t, c, intent) {
     if (!tracks[t] || !tracks[t].clips[c]) return;
     cur = { t: t, c: c };
     var tr = tracks[t], p = tr.project, clip = tr.clips[c], multi = tr.clips.length > 1;
@@ -147,18 +227,14 @@
     $$(".clip").forEach(function (b) {
       b.setAttribute("aria-current", (+b.getAttribute("data-t") === t && +b.getAttribute("data-c") === c) ? "true" : "false");
     });
-    // move the playhead to the chosen clip
-    var active = $('.clip[aria-current="true"]');
-    var head = $(".playhead") || document.createElement("i");
-    head.className = "playhead";
-    if (head.parentNode !== active.parentNode) active.parentNode.appendChild(head);
-    head.style.left = (active.offsetLeft + active.offsetWidth / 2) + "px";
+    movePlayhead();
 
     $("#tc").textContent = multi ? "EP " + pad(c + 1) + " / " + pad(tr.clips.length) : pad(t + 1) + " / " + pad(tracks.length);
     $("#reelScene").textContent = "SC." + pad(t + 1) + (multi ? " · EP " + pad(c + 1) : "");
     $("#now").innerHTML = "<b>" + esc(multi ? shortName(p) + " · " + clip.title : p.title) + "</b><span>" +
-      esc([p.category, p.client].filter(Boolean).join(" · ")).toUpperCase() + "</span>";
-    showPoster();
+      esc([p.category, p.client].filter(Boolean).join(" · ")).toUpperCase() + "</span>" +
+      (vimeoId(clip.video) ? '<a class="now__alt" href="https://vimeo.com/' + vimeoId(clip.video) + '" target="_blank" rel="noopener">Watch on Vimeo ↗</a>' : "");
+    showPoster(intent);
 
     var hash = "#work/" + p.slug + (multi ? "/" + (c + 1) : "");
     if (location.hash.indexOf("#work/") === 0 || t || c) history.replaceState(null, "", hash);
@@ -175,7 +251,7 @@
       tracks.forEach(function (tr, i) { if (tr.project.featured && !start.t) start.t = i; });
     }
     select(start.t, start.c);
-    window.addEventListener("resize", function () { select(cur.t, cur.c); });
+    window.addEventListener("resize", movePlayhead);
   }
 
   $("#watchBtn").addEventListener("click", function (e) {

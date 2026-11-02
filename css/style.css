@@ -13,7 +13,7 @@
   --grad: linear-gradient(45deg, var(--violet), var(--cyan));
   --pop: cubic-bezier(.34, 1.56, .64, 1);
   --font: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-wide: "Jost", "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-wide: var(--font);
   --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
   --nav-h: 64px;
 }
@@ -58,11 +58,11 @@ main { overflow-x: clip; }
 .loader.is-gone { display: none; }
 .loader__logo { width: min(320px, 68vw); overflow: visible; }
 .lg { transform-box: fill-box; }
-.lg-a { transform-origin: 50% 100%; animation: ldDrop .75s .1s both; }
-.lg-t { transform-origin: 50% 100%; animation: ldPop .55s .45s var(--pop) both; }
-.lg-g { transform-origin: 50% 50%; animation: ldPop .55s .58s var(--pop) both; }
-.lg-tri { transform-origin: 0 50%; animation: ldTri .7s .8s var(--pop) both; }
-.lg-l { animation: ldUp .45s calc(1s + var(--i) * .04s) ease-out both; }
+.lg-a { transform-origin: 50% 100%; animation: ldDrop .6s both; }
+.lg-t { transform-origin: 50% 100%; animation: ldPop .45s .3s var(--pop) both; }
+.lg-g { transform-origin: 50% 50%; animation: ldPop .45s .38s var(--pop) both; }
+.lg-tri { transform-origin: 0 50%; animation: ldTri .5s .5s var(--pop) both; }
+.lg-l { animation: ldUp .35s calc(.55s + var(--i) * .03s) ease-out both; }
 @keyframes ldDrop {
   0% { transform: translateY(-220%) scale(.85, 1.25); opacity: 0; animation-timing-function: cubic-bezier(.55, 0, 1, .45); }
   10% { opacity: 1; }
@@ -97,7 +97,7 @@ main { overflow-x: clip; }
 }
 .hero__grid { position: relative; display: grid; grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr); gap: clamp(32px, 4.5vw, 64px); align-items: center; }
 
-.eyebrow { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-wide); text-transform: uppercase; letter-spacing: .28em; font-size: .72rem; color: var(--cyan); margin-bottom: 14px; }
+.eyebrow { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-wide); font-weight: 700; text-transform: uppercase; letter-spacing: .24em; font-size: .7rem; color: var(--cyan); margin-bottom: 14px; }
 .rec { width: 9px; height: 9px; border-radius: 50%; background: #FF4F6D; box-shadow: 0 0 0 4px rgba(255, 79, 109, .2); animation: rec 1.2s steps(2, jump-none) infinite; }
 @keyframes rec { 50% { opacity: .2; } }
 
@@ -232,3 +232,17 @@ h1 { font-size: clamp(2.4rem, 4.6vw, 4.1rem); }
 .clip--thumb { background-size: cover; background-position: center; }
 .clip--empty { opacity: .55; }
 .clip--empty:hover, .clip--empty[aria-current="true"] { opacity: .85; }
+
+/* ---------- Instant player: poster sits over the preloaded Vimeo player ---------- */
+.player iframe { z-index: 1; }
+.player .poster { z-index: 2; transition: opacity .35s ease; }
+.player.is-live .poster { opacity: 0; pointer-events: none; }
+.poster.is-loading .poster__play svg { opacity: 0; }
+.poster.is-loading .poster__play::after {
+  content: ""; position: absolute; inset: 16px; border-radius: 50%;
+  border: 3px solid rgba(109, 74, 255, .25); border-top-color: var(--violet);
+  animation: spinIt .7s linear infinite;
+}
+@keyframes spinIt { to { transform: rotate(360deg); } }
+.now__alt { margin-left: auto; font: 500 .7rem var(--mono); letter-spacing: .04em; color: var(--cyan); text-decoration: none; white-space: nowrap; }
+.now__alt:hover { text-decoration: underline; }

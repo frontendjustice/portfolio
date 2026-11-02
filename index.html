@@ -13,7 +13,12 @@
   <script>document.documentElement.className = "js";</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Jost:wght@500&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <!-- warm up connections to Vimeo so thumbnails and videos start faster -->
+  <link rel="preconnect" href="https://player.vimeo.com">
+  <link rel="preconnect" href="https://i.vimeocdn.com">
+  <link rel="preconnect" href="https://f.vimeocdn.com">
+  <link rel="dns-prefetch" href="https://vimeo.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -131,7 +136,7 @@
   </section>
 </main>
 
-<script src="js/projects.js"></script>
-<script src="js/main.js"></script>
+<script src="js/projects.js" defer></script>
+<script src="js/main.js" defer></script>
 </body>
 </html>
