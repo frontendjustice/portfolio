@@ -39,8 +39,8 @@ window.PROJECTS = [
     featured: true,
     episodes: [
       { title: "What is Breast Cancer?", video: "https://vimeo.com/1242547249", thumbnail: "" },
-      { title: "Episode 2", video: "https://vimeo.com/1242574302", thumbnail: "" },
-      { title: "Episode 3", video: "https://vimeo.com/1242576100", thumbnail: "" },
+      { title: "Causes and Risk Factors", video: "https://vimeo.com/1242574302", thumbnail: "" },
+      { title: "Signs and Symptoms", video: "https://vimeo.com/1242576100", thumbnail: "" },
       { title: "Episode 4", video: "", thumbnail: "" },
       { title: "Episode 5", video: "", thumbnail: "" },
       { title: "Episode 6", video: "", thumbnail: "" }
