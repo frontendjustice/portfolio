@@ -114,7 +114,7 @@
     player.innerHTML =
       '<button class="poster' + (accent && !img ? " poster--" + esc(accent) : "") + (intent && clip.video ? " is-loading" : "") + '" type="button" id="poster" aria-label="Play ' + esc(clip.title) + '">' +
         (img ? '<img src="' + esc(img) + '" alt="">' : (accent === "pink" ? RIBBON : "")) +
-        (img ? "" : '<span class="poster__title"><small>' + esc(shortName(p)).toUpperCase() + "</small>" + (multi ? "EP " + pad(cur.c + 1) : esc(shortName(p))) + "</span>") +
+        (img ? "" : '<span class="poster__title"><small>' + esc(multi ? shortName(p) : (p.client || p.category || "")).toUpperCase() + "</small>" + (multi ? "EP " + pad(cur.c + 1) : esc(shortName(p))) + "</span>") +
         PLAY + (clip.video ? "" : '<span class="poster__soon">VIDEO SOON</span>') +
       "</button>";
     $("#poster").addEventListener("click", play);
