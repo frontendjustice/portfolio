@@ -1,6 +1,6 @@
 # ATG Animations: portfolio site
 
-A short landing page for ATG Animations: the video reel, what I do, and a call to action. It's plain HTML, CSS and JS with no build step, so you can open `index.html` in a browser to preview it.
+A short landing page for ATG Animations: what I do, a card for each project with its video, and a call to action. It's plain HTML, CSS and JS with no build step, so you can open `index.html` in a browser to preview it.
 
 ## Adding or updating work
 
@@ -11,7 +11,7 @@ Edit **`js/projects.js`**. It's the only file you need to touch.
 3. Optional: add a thumbnail image to `assets/work/` and set `thumbnail: "assets/work/your-image.jpg"`. Without one, a branded placeholder card is shown.
 4. Commit and push. The live site updates automatically.
 
-Videos play right on the page. Each project shows up as a track in the timeline under the player, with one clip per episode.
+Each project gets its own card (in the order listed in `js/projects.js`) with its own player and a Full screen button. A series (with `episodes`) gets an episode picker inside its card.
 Every video has its own shareable link, e.g. `https://<your-site>/#work/pink-october/3` opens episode 3.
 
 ## Contact details

@@ -53,11 +53,10 @@
 </header>
 
 <main id="top">
-  <!-- ============ Screen 1: what I do + the reel ============ -->
+  <!-- ============ Intro: what I do ============ -->
   <section class="hero">
     <div class="wrap hero__grid">
-
-      <div class="hero__copy">
+      <div>
         <p class="eyebrow"><span class="rec" aria-hidden="true"></span>Health animation studio</p>
         <h1 class="kinetic">
           <span class="w"><span style="--i:0">Health</span></span>
@@ -66,37 +65,34 @@
           <span class="w w--squiggle"><span class="grad" style="--i:3">actually</span><svg class="squiggle" viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path d="M4 16 C 40 4, 70 22, 105 12 S 170 4, 205 14 S 268 20, 296 8"/></svg></span>
           <span class="w"><span style="--i:4">watch.</span></span>
         </h1>
+      </div>
+      <div class="hero__side">
         <p class="lead">I'm Justice, a <strong>pharmacy-trained animator</strong>. I make short animated explainers and campaigns that stay medically accurate while feeling clear, fun and never gloomy.</p>
-
         <ul class="offer" aria-label="What I do">
           <li><i style="--c:#6D4AFF"></i>Animated explainers</li>
           <li><i style="--c:#FF5FA2"></i>Campaign series</li>
           <li><i style="--c:#22D3EE"></i>Campaign design</li>
         </ul>
         <p class="for">For NGOs · clinics · pharmacies · health startups</p>
-
         <div class="hero__ctas">
-          <a href="#contact" class="btn">Start a project <span class="tri" aria-hidden="true"></span></a>
-          <a href="#reel" class="btn btn--ghost" id="watchBtn">Watch the reel</a>
+          <a href="#work" class="btn">See the work <span class="down" aria-hidden="true">↓</span></a>
+          <a href="#contact" class="btn btn--ghost">Start a project</a>
         </div>
       </div>
+    </div>
+  </section>
 
-      <!-- The reel: player + editing-timeline episode picker -->
-      <div class="reel" id="reel">
-        <div class="reel__screen">
-          <span class="reel__label reel__label--l" id="reelScene">SC.01</span>
-          <span class="reel__label reel__label--r">24 FPS</span>
-          <div class="player" id="player"></div>
+  <!-- ============ The work: one card per project ============ -->
+  <section class="work" id="work">
+    <div class="wrap">
+      <div class="work__head">
+        <div>
+          <p class="eyebrow"><span class="kf" aria-hidden="true"></span>The reel</p>
+          <h2>Selected work</h2>
         </div>
-        <div class="now" id="now" aria-live="polite"></div>
-        <div class="tl" aria-label="Choose a video">
-          <div class="tl__bar">
-            <span class="tl__tc" id="tc">EP 01 / 06</span>
-            <span class="tl__comp">atg_reel.aep</span>
-          </div>
-          <div class="tl__rows" id="tracks"></div>
-        </div>
+        <span class="work__count" id="workCount"></span>
       </div>
+      <div class="cards" id="cards"></div>
     </div>
   </section>
 
