@@ -309,7 +309,7 @@
 
   /* ================= Contact ================= */
   var links = [
-    ["✉", "Email", contact.email && "mailto:" + contact.email],
+    ["✉", contact.email, contact.email && "mailto:" + contact.email],
     ["✆", "WhatsApp", contact.whatsapp],
     ["◎", "Instagram", contact.instagram],
     ["in", "LinkedIn", contact.linkedin],
@@ -337,6 +337,7 @@
       var subject = "Project brief from " + data.get("name");
       var text = data.get("message") + "\n\n— " + data.get("name") + "\n" + data.get("email");
       location.href = "mailto:" + contact.email + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(text);
+      note.innerHTML = 'Opening your email app… If nothing opens, email me at <a href="mailto:' + esc(contact.email) + '">' + esc(contact.email) + "</a>.";
     } else {
       note.textContent = "Contact form isn't connected yet. Add an email in js/projects.js.";
     }

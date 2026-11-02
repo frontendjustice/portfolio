@@ -76,7 +76,7 @@ window.PROJECTS = [
 
 /* Your contact details — shown in the Contact section and footer */
 window.CONTACT = {
-  email: "",          // e.g. "hello@atganimations.com"
+  email: "osemedejustice@gmail.com",
   whatsapp: "",       // e.g. "https://wa.me/2348000000000"
   instagram: "",      // full profile link
   linkedin: "",
