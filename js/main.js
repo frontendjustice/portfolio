@@ -43,9 +43,7 @@
       '<circle cx="38" cy="42" r="2.6" fill="#FF4F96"/><circle cx="62" cy="42" r="2.6" fill="#FF4F96"/>' +
     "</svg>";
   var PLAY_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.4-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5Z"/></svg>';
-  var FS_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>';
   var VIMEO = "https://player.vimeo.com";
-  var canFullscreen = !!(document.fullscreenEnabled || document.webkitFullscreenEnabled);
   var ACCENT = { pink: "#FF5FA2", violet: "#6D4AFF", blue: "#3B8BFF", navy: "#22D3EE" };
 
   function vimeoId(url) { var m = (url || "").match(/vimeo\.com\/(?:video\/)?(\d+)/); return m ? m[1] : ""; }
@@ -107,7 +105,6 @@
         (multi ? '<p class="pcard__now" data-now></p>' : "") +
         '<div class="pcard__actions">' +
           '<button class="btn" type="button" data-play>' + PLAY_ICON + "Play</button>" +
-          (canFullscreen ? '<button class="btn btn--ghost btn--icon" type="button" data-fs>' + FS_ICON + "Full screen</button>" : "") +
           '<a class="pcard__alt" data-alt target="_blank" rel="noopener" hidden>Watch on Vimeo ↗</a>' +
         "</div>" +
       "</div>" +
@@ -207,12 +204,6 @@
       box.innerHTML = '<iframe src="' + esc(embedUrl(c.video)) + '" allow="autoplay; fullscreen; picture-in-picture; encrypted-media" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen title="' + esc(c.title) + '"></iframe>';
     };
 
-    self.fullscreen = function () {
-      var req = box.requestFullscreen || box.webkitRequestFullscreen;
-      if (req) { var r = req.call(box); if (r && r.catch) r.catch(function () {}); }
-      self.play();
-    };
-
     self.select = function (c, intent, keepHash) {
       if (!clips[c]) return;
       cur = c;
@@ -225,7 +216,6 @@
       if (now) now.innerHTML = "<span>Now showing</span><b>EP " + pad(c + 1) + " · " + esc(x.title) + "</b>";
       var alt = $("[data-alt]", card), id = vimeoId(x.video);
       alt.hidden = !id; if (id) alt.href = "https://vimeo.com/" + id;
-      var fs = $("[data-fs]", card); if (fs) fs.disabled = !x.video;
       $("[data-play]", card).disabled = !x.video;
       showPoster(intent);
       if (!keepHash) history.replaceState(null, "", "#work/" + project.slug + (multi ? "/" + (c + 1) : ""));
@@ -246,7 +236,6 @@
       else vimeoThumb(clips[+b.getAttribute("data-c")], function (url) { paintClip(b, url); });
     });
     $("[data-play]", card).addEventListener("click", self.play);
-    var fsb = $("[data-fs]", card); if (fsb) fsb.addEventListener("click", self.fullscreen);
     self.select(0, false, true);
   }
   function paintClip(b, url) {
