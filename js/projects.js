@@ -78,7 +78,10 @@ window.PROJECTS = [
 window.CONTACT = {
   email: "osemedejustice@gmail.com",
   whatsapp: "https://wa.me/message/6Z27FI26X6HLL1",
-  instagram: "https://www.instagram.com/atg_stu/",
+  // Optional: your WhatsApp number in international format, digits only (e.g. "2348012345678").
+  // With it, whatever visitors type in the chat box arrives in WhatsApp already written.
+  whatsappNumber: "",
+  instagram: "https://www.instagram.com/atg.stu/",
   linkedin: "",
   behance: "",
   formEndpoint: "https://formspree.io/f/mbggpnzj"   // briefs go straight to the inbox via Formspree

@@ -229,9 +229,6 @@ h1 { font-size: clamp(2.6rem, 6vw, 5.2rem); margin: 0; }
 .cta h2 { font-size: clamp(2rem, 3.8vw, 3.1rem); }
 .cta__copy p { font-size: 1.12rem; color: rgba(255, 255, 255, .88); max-width: 28em; }
 .cta__copy strong { color: #fff; }
-.cta__links { list-style: none; padding: 0; margin: 22px 0 0; display: flex; flex-wrap: wrap; gap: 10px; }
-.cta__links a { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 999px; background: rgba(255, 255, 255, .14); text-decoration: none; font-weight: 700; font-size: .92rem; transition: background .2s, transform .35s var(--pop); }
-.cta__links a:hover { background: rgba(255, 255, 255, .25); transform: translateY(-2px); }
 .form-wrap { position: relative; padding-top: 46px; }
 .peeker { position: absolute; top: 0; right: 44px; width: 112px; z-index: 1; animation: peek 5s ease-in-out infinite; transform-origin: 50% 100%; }
 @keyframes peek { 0%, 45%, 100% { transform: translateY(0); } 50% { transform: translateY(14px) scaleY(.9); } 58% { transform: translateY(-4px); } 64% { transform: translateY(0); } }
@@ -279,3 +276,84 @@ h1 { font-size: clamp(2.6rem, 6vw, 5.2rem); margin: 0; }
 }
 .form__note a { color: var(--violet); font-weight: 600; }
 .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+
+/* ---------- Social call-to-action buttons ---------- */
+.social { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 26px; max-width: 560px; }
+.social__btn {
+  display: flex; align-items: center; gap: 12px; padding: 14px 14px; border-radius: 18px; text-decoration: none; color: #fff;
+  box-shadow: 0 14px 30px -14px rgba(14, 18, 34, .6), inset 0 0 0 1px rgba(255, 255, 255, .18);
+  transition: transform .35s var(--pop), box-shadow .2s; position: relative; overflow: hidden;
+}
+.social__btn:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 20px 36px -14px rgba(14, 18, 34, .7), inset 0 0 0 1px rgba(255, 255, 255, .3); }
+.social__btn:active { transform: scale(.97); }
+.social__btn--wa { background: linear-gradient(135deg, #25D366, #128C7E); }
+.social__btn--ig { background: linear-gradient(45deg, #F9A825 0%, #F56040 28%, #E1306C 55%, #C13584 75%, #833AB4 100%); }
+.social__icon { flex: none; width: 42px; height: 42px; border-radius: 13px; display: grid; place-items: center; background: rgba(255, 255, 255, .2); }
+.social__btn:hover .social__icon { animation: wiggle .5s var(--pop); }
+@keyframes wiggle { 0%, 100% { transform: rotate(0); } 30% { transform: rotate(-12deg) scale(1.08); } 65% { transform: rotate(8deg); } }
+.social__text { display: flex; flex-direction: column; min-width: 0; line-height: 1.2; }
+.social__text b { font-size: 1.04rem; font-weight: 800; letter-spacing: -.01em; white-space: nowrap; }
+.social__text small { font-size: .82rem; opacity: .9; margin-top: 3px; }
+.social__arrow { margin-left: auto; font-weight: 800; font-size: 1.2rem; transition: transform .35s var(--pop); }
+.social__btn:hover .social__arrow { transform: translateX(4px); }
+.social__mail { grid-column: 1 / -1; display: inline-flex; align-items: center; gap: 10px; justify-self: start; padding: 6px 2px; color: #fff; font-weight: 700; text-decoration: none; opacity: .92; }
+.social__mail:hover { opacity: 1; text-decoration: underline; }
+
+.ico { width: 26px; height: 26px; }
+.ico--wa .ico__bubble { fill: none; stroke: #fff; stroke-width: 1.9; stroke-linejoin: round; }
+.ico--wa .ico__phone { fill: #fff; }
+.ico--ig rect, .ico--ig circle { fill: none; stroke: #fff; stroke-width: 2; }
+.ico--ig .ico__dot { fill: #fff; stroke: none; }
+.ico--mail { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ---------- WhatsApp chat window ---------- */
+.wa { position: fixed; right: 20px; bottom: 20px; z-index: 50; display: flex; flex-direction: column; align-items: flex-end; gap: 12px; font-family: var(--font); }
+.wa__fab {
+  width: 62px; height: 62px; border-radius: 50%; border: 0; cursor: pointer; display: grid; place-items: center;
+  background: #25D366; box-shadow: 0 14px 30px -10px rgba(18, 140, 126, .8); transition: transform .35s var(--pop);
+  position: relative;
+}
+.wa__fab .ico { width: 32px; height: 32px; }
+.wa__fab::after { content: ""; position: absolute; inset: 0; border-radius: 50%; box-shadow: 0 0 0 0 rgba(37, 211, 102, .55); animation: waPulse 2.4s ease-out infinite; }
+@keyframes waPulse { 0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, .55); } 70%, 100% { box-shadow: 0 0 0 16px rgba(37, 211, 102, 0); } }
+.wa__fab:hover { transform: scale(1.08) rotate(-6deg); }
+.wa.is-open .wa__fab::after { animation: none; }
+.wa__teaser {
+  position: relative; display: inline-flex; align-items: center; gap: 10px; padding: 10px 12px 10px 16px; border-radius: 16px 16px 4px 16px;
+  background: #fff; color: var(--ink); font-weight: 700; font-size: .9rem; cursor: pointer; box-shadow: 0 14px 30px -12px rgba(0, 0, 0, .45);
+  animation: popIn .5s var(--pop);
+}
+.wa__teaser[hidden] { display: none; }
+.wa__teaser button { border: 0; background: #EEF1F7; color: var(--ink); width: 22px; height: 22px; border-radius: 50%; cursor: pointer; font-size: 1rem; line-height: 1; }
+@keyframes popIn { from { transform: translateY(10px) scale(.85); opacity: 0; } }
+.wa__panel {
+  width: min(350px, calc(100vw - 32px)); border-radius: 20px; overflow: hidden; background: #ECE5DD; color: #111B21;
+  box-shadow: 0 30px 70px -20px rgba(0, 0, 0, .6); animation: popIn .4s var(--pop); transform-origin: bottom right;
+}
+.wa__panel[hidden] { display: none; }
+.wa__head { display: flex; align-items: center; gap: 12px; padding: 14px 14px 14px 16px; background: #075E54; color: #fff; }
+.wa__head img { width: 40px; height: 40px; border-radius: 50%; }
+.wa__head div { display: flex; flex-direction: column; line-height: 1.25; }
+.wa__head b { font-size: .98rem; }
+.wa__head small { font-size: .76rem; opacity: .85; }
+.wa__close { margin-left: auto; width: 32px; height: 32px; border-radius: 50%; border: 0; background: rgba(255, 255, 255, .15); color: #fff; font-size: 1.3rem; cursor: pointer; }
+.wa__body { padding: 16px 14px 8px; min-height: 150px; background-color: #ECE5DD; background-image: radial-gradient(rgba(0, 0, 0, .05) 1px, transparent 1px); background-size: 14px 14px; }
+.wa__msg { position: relative; max-width: 88%; background: #fff; padding: 9px 12px 18px; border-radius: 0 12px 12px 12px; font-size: .92rem; line-height: 1.4; box-shadow: 0 1px 1px rgba(0, 0, 0, .1); animation: popIn .5s .15s var(--pop) both; }
+.wa__time { position: absolute; right: 10px; bottom: 4px; font-size: .64rem; color: #667781; }
+.wa__chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.wa__chips button { border: 1px solid #25D366; background: #fff; color: #075E54; font: 600 .8rem var(--font); padding: 6px 11px; border-radius: 999px; cursor: pointer; transition: background .2s; }
+.wa__chips button:hover { background: #DCF8C6; }
+.wa__form { display: flex; align-items: flex-end; gap: 8px; padding: 10px 10px 4px; background: #F0F2F5; }
+.wa__form textarea { flex: 1; min-width: 0; resize: none; overflow-y: auto; line-height: 1.35; border: 0; border-radius: 20px; padding: 10px 14px; font: 400 .92rem var(--font); color: #111B21; background: #fff; max-height: 110px; }
+.wa__form textarea:focus { outline: 2px solid #25D366; }
+.wa__send { flex: none; width: 42px; height: 42px; border-radius: 50%; border: 0; background: #25D366; cursor: pointer; display: grid; place-items: center; transition: transform .3s var(--pop); }
+.wa__send:hover { transform: scale(1.08); }
+.wa__send svg { width: 20px; fill: #fff; margin-left: 2px; }
+.wa__note { margin: 0; padding: 2px 12px 10px; background: #F0F2F5; font-size: .72rem; color: #667781; text-align: center; }
+
+@media (max-width: 640px) {
+  .social { grid-template-columns: 1fr; }
+  .wa { right: 14px; bottom: 14px; }
+  .wa__fab { width: 56px; height: 56px; }
+}
+@media (min-width: 641px) { .footer { padding-right: 90px; } }

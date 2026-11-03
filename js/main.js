@@ -308,16 +308,104 @@
   }
 
   /* ================= Contact ================= */
-  var links = [
-    ["✉", contact.email, contact.email && "mailto:" + contact.email],
-    ["✆", "WhatsApp", contact.whatsapp],
-    ["◎", "@" + (contact.instagram || "").replace(/\/+$/, "").split("/").pop(), contact.instagram],
-    ["in", "LinkedIn", contact.linkedin],
-    ["Bē", "Behance", contact.behance]
-  ].filter(function (l) { return l[2]; });
-  $("#contactLinks").innerHTML = links.map(function (l) {
-    return '<li><a href="' + esc(l[2]) + '" target="_blank" rel="noopener"><span aria-hidden="true">' + l[0] + "</span>" + l[1] + "</a></li>";
-  }).join("");
+  var ICON_WA = '<svg viewBox="0 0 24 24" aria-hidden="true" class="ico ico--wa"><path class="ico__bubble" d="M12 2.5a9.5 9.5 0 0 0-8.2 14.3L2.5 21.5l4.8-1.3A9.5 9.5 0 1 0 12 2.5Z"/><path class="ico__phone" d="M8.7 7.4c.2-.4.5-.5.8-.5h.6c.2 0 .4.1.5.4l.8 1.9c.1.2 0 .5-.1.7l-.6.7c-.1.2-.1.4 0 .6.6 1.1 1.5 2 2.6 2.6.2.1.4.1.6 0l.7-.6c.2-.2.5-.2.7-.1l1.9.8c.3.1.4.3.4.5v.6c0 .3-.1.6-.5.8-.6.4-1.4.6-2.1.4-2.9-.7-5.2-3-5.9-5.9-.2-.7 0-1.5.4-2.1Z"/></svg>';
+  var ICON_IG = '<svg viewBox="0 0 24 24" aria-hidden="true" class="ico ico--ig"><rect x="3" y="3" width="18" height="18" rx="5.2"/><circle cx="12" cy="12" r="4.2"/><circle class="ico__dot" cx="17.4" cy="6.6" r="1.2"/></svg>';
+  var ICON_MAIL = '<svg viewBox="0 0 24 24" aria-hidden="true" class="ico ico--mail"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/></svg>';
+  var igHandle = contact.instagram ? "@" + contact.instagram.replace(/\/+$/, "").split("/").pop() : "";
+  var waNumber = (contact.whatsappNumber || "").replace(/\D/g, "");
+
+  function waLink(text) {
+    if (waNumber) return "https://wa.me/" + waNumber + (text ? "?text=" + encodeURIComponent(text) : "");
+    return contact.whatsapp || "";
+  }
+
+  $("#contactLinks").innerHTML =
+    (contact.whatsapp || waNumber ?
+      '<a class="social__btn social__btn--wa" href="' + esc(waLink("Hi Justice! I found you through your portfolio.")) + '" target="_blank" rel="noopener">' +
+        '<span class="social__icon">' + ICON_WA + "</span>" +
+        '<span class="social__text"><b>Chat on WhatsApp</b><small>Quick question? Let\'s talk</small></span>' +
+        '<span class="social__arrow" aria-hidden="true">→</span></a>' : "") +
+    (contact.instagram ?
+      '<a class="social__btn social__btn--ig" href="' + esc(contact.instagram) + '" target="_blank" rel="noopener">' +
+        '<span class="social__icon">' + ICON_IG + "</span>" +
+        '<span class="social__text"><b>Follow ' + esc(igHandle) + "</b><small>See more of my work</small></span>" +
+        '<span class="social__arrow" aria-hidden="true">→</span></a>' : "") +
+    (contact.email ?
+      '<a class="social__mail" href="mailto:' + esc(contact.email) + '">' + ICON_MAIL + esc(contact.email) + "</a>" : "");
+
+  /* ---------- WhatsApp chat window ----------
+     A floating chat button opens a small WhatsApp-style chat on the page. The visitor
+     types their message here, and "Send" carries it over to WhatsApp to deliver. */
+  if (contact.whatsapp || waNumber) {
+    document.body.insertAdjacentHTML("beforeend",
+      '<div class="wa" id="wa">' +
+        '<div class="wa__panel" id="waPanel" role="dialog" aria-label="Chat with Justice on WhatsApp" hidden>' +
+          '<div class="wa__head">' +
+            '<img src="assets/brand/profile.svg" alt="" width="40" height="40">' +
+            "<div><b>Justice · ATG Animations</b><small>Replies on WhatsApp</small></div>" +
+            '<button type="button" class="wa__close" id="waClose" aria-label="Close chat">×</button>' +
+          "</div>" +
+          '<div class="wa__body" id="waBody">' +
+            '<div class="wa__msg">Hi there 👋 I\'m Justice.<br>Got a health topic you\'d like animated? Tell me a little about it.<span class="wa__time">ATG Animations</span></div>' +
+            '<div class="wa__chips" id="waChips">' +
+              '<button type="button">I have a project in mind</button>' +
+              "<button type=\"button\">I'd like a quote</button>" +
+              '<button type="button">Just saying hi</button>' +
+            "</div>" +
+          "</div>" +
+          '<form class="wa__form" id="waForm">' +
+            '<textarea id="waText" rows="1" placeholder="Type a message…" aria-label="Your message"></textarea>' +
+            '<button type="submit" class="wa__send" aria-label="Send on WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.4 20.4 21 12 3.4 3.6 3.4 10.2 15 12 3.4 13.8Z"/></svg></button>' +
+          "</form>" +
+          '<p class="wa__note" id="waNote">Opens WhatsApp to send</p>' +
+        "</div>" +
+        '<span class="wa__teaser" id="waTeaser" hidden>Got a project? Let\'s chat <button type="button" id="waTeaserX" aria-label="Dismiss">×</button></span>' +
+        '<button type="button" class="wa__fab" id="waFab" aria-label="Chat on WhatsApp" aria-expanded="false" aria-controls="waPanel">' + ICON_WA + "</button>" +
+      "</div>");
+
+    var waPanel = $("#waPanel"), waFab = $("#waFab"), waText = $("#waText"), waTeaser = $("#waTeaser");
+    var teaserSeen = false;
+    try { teaserSeen = sessionStorage.getItem("atg-wa-teaser") === "1"; } catch (e) {}
+
+    function setOpen(open) {
+      waPanel.hidden = !open;
+      waFab.setAttribute("aria-expanded", open ? "true" : "false");
+      $("#wa").classList.toggle("is-open", open);
+      if (open) { hideTeaser(); setTimeout(function () { waText.focus({ preventScroll: true }); }, 50); }
+    }
+    function hideTeaser() {
+      waTeaser.hidden = true;
+      try { sessionStorage.setItem("atg-wa-teaser", "1"); } catch (e) {}
+    }
+    waFab.addEventListener("click", function () { setOpen(waPanel.hidden); });
+    $("#waClose").addEventListener("click", function () { setOpen(false); waFab.focus(); });
+    $("#waTeaserX").addEventListener("click", function (e) { e.stopPropagation(); hideTeaser(); });
+    waTeaser.addEventListener("click", function () { setOpen(true); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !waPanel.hidden) setOpen(false); });
+    $$("#waChips button").forEach(function (c) {
+      c.addEventListener("click", function () { waText.value = c.textContent + (c.textContent === "Just saying hi" ? " 👋" : ": "); waText.focus(); });
+    });
+    function grow() { waText.style.height = "auto"; waText.style.height = Math.min(waText.scrollHeight, 110) + "px"; }
+    waText.addEventListener("input", grow);
+    $$("#waChips button").forEach(function (c) { c.addEventListener("click", grow); });
+    waText.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); $("#waForm").requestSubmit ? $("#waForm").requestSubmit() : $("#waForm").dispatchEvent(new Event("submit")); }
+    });
+    $("#waForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      var text = waText.value.trim() || "Hi Justice! I found you through your portfolio.";
+      if (!waNumber && navigator.clipboard) {
+        // The message link can't carry text, so copy it for the visitor to paste
+        navigator.clipboard.writeText(text).then(function () {
+          $("#waNote").textContent = "Message copied. Just paste it in WhatsApp";
+        }).catch(function () {});
+      }
+      window.open(waLink(text), "_blank", "noopener");
+    });
+
+    // A gentle nudge after a little while (once per visit)
+    if (!teaserSeen && !reduceMotion) setTimeout(function () { if (waPanel.hidden) waTeaser.hidden = false; }, 9000);
+  }
 
   var form = $("#contactForm");
   var note = $("#formNote");
