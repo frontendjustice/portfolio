@@ -325,6 +325,9 @@
     e.preventDefault();
     var data = new FormData(form);
     if (contact.formEndpoint) {
+      var btn = $("button[type=submit]", form);
+      data.append("_subject", "New brief from " + data.get("name"));
+      btn.disabled = true;
       note.textContent = "Sending…";
       fetch(contact.formEndpoint, { method: "POST", body: data, headers: { Accept: "application/json" } })
         .then(function (r) {
@@ -332,7 +335,10 @@
           form.reset();
           note.textContent = "Thanks! Your brief is in. I'll reply with an idea soon.";
         })
-        .catch(function () { note.textContent = "Something went wrong. Please email me directly instead."; });
+        .catch(function () {
+          note.innerHTML = "Sorry, that didn't send." + (contact.email ? ' Please email me at <a href="mailto:' + esc(contact.email) + '">' + esc(contact.email) + "</a>." : "");
+        })
+        .then(function () { btn.disabled = false; });
     } else if (contact.email) {
       var subject = "Project brief from " + data.get("name");
       var text = data.get("message") + "\n\n— " + data.get("name") + "\n" + data.get("email");

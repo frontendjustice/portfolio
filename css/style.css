@@ -278,3 +278,4 @@ h1 { font-size: clamp(2.6rem, 6vw, 5.2rem); margin: 0; }
   .squiggle path { stroke-dashoffset: 0; }
 }
 .form__note a { color: var(--violet); font-weight: 600; }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }

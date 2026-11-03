@@ -81,5 +81,5 @@ window.CONTACT = {
   instagram: "",      // full profile link
   linkedin: "",
   behance: "",
-  formEndpoint: ""    // optional: Formspree URL, e.g. "https://formspree.io/f/abcd1234"
+  formEndpoint: "https://formspree.io/f/mbggpnzj"   // briefs go straight to the inbox via Formspree
 };

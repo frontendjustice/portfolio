@@ -17,14 +17,20 @@ Every video has its own shareable link, e.g. `https://<your-site>/#work/pink-oct
 ## Contact details
 
 Fill in `window.CONTACT` at the bottom of `js/projects.js` (email, WhatsApp, Instagram, LinkedIn).
-For the form to deliver briefs straight to your inbox, create a free form at formspree.io and paste its URL into `formEndpoint`. Until then, the form opens the visitor's email app addressed to you.
+The contact form sends briefs straight to your inbox through Formspree (`formEndpoint`). If sending fails, visitors are shown your email address instead.
 
 ## Publishing (free)
 
-**GitHub Pages:** repo → Settings → Pages → Source: "Deploy from a branch" → choose `main` and `/ (root)`.
-The site goes live at `https://frontendjustice.github.io/portfolio/`. A custom domain such as `atganimations.com` can be added on the same settings page.
+**Cloudflare Pages (recommended):** fast worldwide, unlimited bandwidth, works with a private repo.
+1. dash.cloudflare.com → Workers & Pages → Create → Pages → Connect to Git → pick `frontendjustice/portfolio`.
+2. Framework preset: **None**. Build command: *(leave empty)*. Output directory: `/`.
+3. Choose the branch to publish, then Deploy. You get `https://<name>.pages.dev`; every push updates it.
+4. Optional: Custom domains → add e.g. `atganimations.com`.
 
-**Netlify** (alternative): drag the folder onto app.netlify.com/drop, or connect the repo.
+**GitHub Pages (simplest):** repo → Settings → Pages → Source: "Deploy from a branch" → pick the branch and `/ (root)`.
+Live at `https://frontendjustice.github.io/portfolio/`. On the free GitHub plan the repo must be public.
+
+After going live, add your site address under Formspree → your form → Settings → Restrict to domain, so spam bots can't use the form from elsewhere.
 
 ## Files
 
