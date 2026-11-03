@@ -4,7 +4,8 @@
   ============================================================
 
   To add a project, copy one { ... } block, paste it into the list,
-  and fill in the details. Order here = order on the site.
+  and fill in the details. Order here = order on the site:
+  Pink October stays first; new projects go right after it (newest first).
 
   Fields:
     slug       short id used in the shareable link, e.g. "pink-october"
@@ -47,17 +48,6 @@ window.PROJECTS = [
     ]
   },
   {
-    slug: "world-diabetes-day",
-    title: "A Short Story: World Diabetes Day Spec Video",
-    short: "World Diabetes Day",   // shorter name used on the timeline
-    client: "",
-    category: "Awareness video",
-    summary: "Diabetes is best managed together.",
-    video: "https://vimeo.com/1242550627",
-    thumbnail: "",
-    accent: "blue"
-  },
-  {
     slug: "movember",
     title: "Movember: November for Men's Health",
     short: "Movember",
@@ -67,6 +57,17 @@ window.PROJECTS = [
     video: "https://vimeo.com/1243040720",
     thumbnail: "",
     accent: "violet"
+  },
+  {
+    slug: "world-diabetes-day",
+    title: "A Short Story: World Diabetes Day Spec Video",
+    short: "World Diabetes Day",   // shorter name used on the timeline
+    client: "",
+    category: "Awareness video",
+    summary: "Diabetes is best managed together.",
+    video: "https://vimeo.com/1242550627",
+    thumbnail: "",
+    accent: "blue"
   }
 
   /* ---- Example of another project (remove the slashes-star to use) ----
