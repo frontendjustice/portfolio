@@ -2,6 +2,8 @@
 
 A short landing page for ATG Animations: what I do, a card for each project with its video, and a call to action. It's plain HTML, CSS and JS with no build step, so you can open `index.html` in a browser to preview it.
 
+**Live site:** https://atg-animations.pages.dev (Cloudflare Pages, updates automatically on every push).
+
 ## Adding or updating work
 
 Edit **`js/projects.js`**. It's the only file you need to touch.
@@ -41,4 +43,5 @@ js/projects.js        ← your projects and contact details
 js/main.js            renders projects, video player, contact form
 assets/brand/         logos and icon
 assets/work/          thumbnails (add your own)
+assets/og-image.jpg   preview image shown when the link is shared (WhatsApp, LinkedIn, email)
 ```
