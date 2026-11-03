@@ -78,7 +78,7 @@ window.PROJECTS = [
 window.CONTACT = {
   email: "osemedejustice@gmail.com",
   whatsapp: "",       // e.g. "https://wa.me/2348000000000"
-  instagram: "",      // full profile link
+  instagram: "https://www.instagram.com/atg_stu/",
   linkedin: "",
   behance: "",
   formEndpoint: "https://formspree.io/f/mbggpnzj"   // briefs go straight to the inbox via Formspree

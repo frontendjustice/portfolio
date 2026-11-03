@@ -311,7 +311,7 @@
   var links = [
     ["✉", contact.email, contact.email && "mailto:" + contact.email],
     ["✆", "WhatsApp", contact.whatsapp],
-    ["◎", "Instagram", contact.instagram],
+    ["◎", "@" + (contact.instagram || "").replace(/\/+$/, "").split("/").pop(), contact.instagram],
     ["in", "LinkedIn", contact.linkedin],
     ["Bē", "Behance", contact.behance]
   ].filter(function (l) { return l[2]; });
@@ -333,7 +333,7 @@
         .then(function (r) {
           if (!r.ok) throw new Error();
           form.reset();
-          note.textContent = "Thanks! Your brief is in. I'll reply with an idea soon.";
+          note.textContent = "Thanks! Your brief is in. I'll get back to you soon.";
         })
         .catch(function () {
           note.innerHTML = "Sorry, that didn't send." + (contact.email ? ' Please email me at <a href="mailto:' + esc(contact.email) + '">' + esc(contact.email) + "</a>." : "");
