@@ -56,6 +56,17 @@ window.PROJECTS = [
     video: "https://vimeo.com/1242550627",
     thumbnail: "",
     accent: "blue"
+  },
+  {
+    slug: "movember",
+    title: "Movember: November for Men's Health",
+    short: "Movember",
+    client: "",
+    category: "Awareness video",
+    summary: "Grow it. Check it. Talk about it.",
+    video: "https://vimeo.com/1243040720",
+    thumbnail: "",
+    accent: "violet"
   }
 
   /* ---- Example of another project (remove the slashes-star to use) ----

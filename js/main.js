@@ -126,23 +126,21 @@
       clearTimeout(timer);
       frame = null; frameReady = false; wantPlay = !!intent;
       box.classList.remove("is-live");
+      // The branded poster (colour, character, title) is always drawn underneath; a cover
+      // image covers it once it has loaded, and is dropped if it fails to load.
       box.innerHTML =
-        '<button class="poster' + (accent && !img ? " poster--" + esc(accent) : "") + (intent && c.video ? " is-loading" : "") + '" type="button" aria-label="Play ' + esc(c.title) + '">' +
-          (img ? '<img src="' + esc(img) + '" alt="" loading="lazy">' : (accent === "pink" ? RIBBON : "")) +
-          (img ? "" : '<span class="poster__title"><small>' + esc(multi ? shortName(project) : (project.category || "")).toUpperCase() + "</small>" + (multi ? "EP " + pad(cur + 1) : esc(shortName(project))) + "</span>") +
+        '<button class="poster' + (accent ? " poster--" + esc(accent) : "") + (intent && c.video ? " is-loading" : "") + '" type="button" aria-label="Play ' + esc(c.title) + '">' +
+          (accent === "pink" ? RIBBON : "") +
+          '<span class="poster__title"><small>' + esc(multi ? shortName(project) : (project.category || "")).toUpperCase() + "</small>" + (multi ? "EP " + pad(cur + 1) : esc(shortName(project))) + "</span>" +
           '<span class="poster__play" aria-hidden="true">' + PLAY_ICON + "</span>" +
           (c.video ? "" : '<span class="poster__soon">VIDEO SOON</span>') +
         "</button>";
-      $(".poster", box).addEventListener("click", self.play);
-      if (!img) {
+      var poster = $(".poster", box);
+      poster.addEventListener("click", self.play);
+      if (img) addCover(poster, img);
+      else {
         var want = c;
-        vimeoThumb(c, function (url) {
-          var pi = $(".poster", box);
-          if (clip() !== want || !pi) return;
-          $$(".poster__char, .poster__title", pi).forEach(function (n) { n.remove(); });
-          pi.classList.remove("poster--" + accent);
-          pi.insertAdjacentHTML("afterbegin", '<img src="' + esc(url) + '" alt="">');
-        });
+        vimeoThumb(c, function (url) { var pi = $(".poster", box); if (clip() === want && pi) addCover(pi, url); });
       }
       if (vimeoId(c.video) && (intent || warm)) {
         if (intent) loadFrame(); else if (!saveData) timer = setTimeout(function () { (window.requestIdleCallback || setTimeout)(loadFrame); }, 250);
@@ -236,6 +234,14 @@
     });
     $("[data-play]", card).addEventListener("click", self.play);
     self.select(0, false, true);
+  }
+  function addCover(poster, url) {
+    var im = new Image();
+    im.alt = "";
+    im.onload = function () { poster.classList.add("has-img"); };
+    im.onerror = function () { im.remove(); };
+    im.src = url;
+    poster.insertBefore(im, poster.firstChild);
   }
   function paintClip(b, url) {
     b.style.backgroundImage = "linear-gradient(rgba(14,18,34,.25), rgba(14,18,34,.6)), url(\"" + url.replace(/"/g, "") + "\")";
