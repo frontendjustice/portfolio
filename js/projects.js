@@ -48,17 +48,6 @@ window.PROJECTS = [
     ]
   },
   {
-    slug: "world-diabetes-day-fundamentals",
-    title: "World Diabetes Day: The Fundamentals",
-    short: "Diabetes Fundamentals",
-    client: "",
-    category: "Explainer",
-    summary: "What diabetes is, the three main types and who's at risk, explained simply.",
-    video: "https://vimeo.com/1246636283",
-    thumbnail: "",
-    accent: "navy"
-  },
-  {
     slug: "movember",
     title: "Movember: November for Men's Health",
     short: "Movember",
@@ -68,6 +57,17 @@ window.PROJECTS = [
     video: "https://vimeo.com/1243040720",
     thumbnail: "",
     accent: "violet"
+  },
+  {
+    slug: "world-diabetes-day-fundamentals",
+    title: "World Diabetes Day: The Fundamentals",
+    short: "Diabetes Fundamentals",
+    client: "",
+    category: "Explainer",
+    summary: "What diabetes is, the three main types and who's at risk, explained simply.",
+    video: "https://vimeo.com/1246636283",
+    thumbnail: "",
+    accent: "navy"
   },
   {
     slug: "world-diabetes-day",
