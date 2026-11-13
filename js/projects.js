@@ -59,17 +59,6 @@ window.PROJECTS = [
     accent: "violet"
   },
   {
-    slug: "world-diabetes-day-fundamentals",
-    title: "World Diabetes Day: The Fundamentals",
-    short: "Diabetes Fundamentals",
-    client: "",
-    category: "Explainer",
-    summary: "What diabetes is, the three main types and who's at risk, explained simply.",
-    video: "https://vimeo.com/1246636283",
-    thumbnail: "",
-    accent: "navy"
-  },
-  {
     slug: "world-diabetes-day",
     title: "A Short Story: World Diabetes Day Spec Video",
     short: "World Diabetes Day",   // shorter name used on the timeline
@@ -79,6 +68,17 @@ window.PROJECTS = [
     video: "https://vimeo.com/1242550627",
     thumbnail: "",
     accent: "blue"
+  },
+  {
+    slug: "world-diabetes-day-fundamentals",
+    title: "World Diabetes Day: The Fundamentals",
+    short: "Diabetes Fundamentals",
+    client: "",
+    category: "Explainer",
+    summary: "What diabetes is, the three main types and who's at risk, explained simply.",
+    video: "https://vimeo.com/1246636283",
+    thumbnail: "",
+    accent: "navy"
   }
 
   /* ---- Example of another project (remove the slashes-star to use) ----
